@@ -13,10 +13,39 @@ export default function ProjectsPage() {
       }
     }
 
+    const handleMouseEnter = () => {
+      const cursor = document.getElementById("custom-cursor")
+      const cursorImg = cursor?.querySelector("img")
+      if (cursorImg) {
+        cursorImg.src = "/hover-cursor.png"
+        cursorImg.alt = "Blue pointing hand cursor"
+      }
+    }
+
+    const handleMouseLeave = () => {
+      const cursor = document.getElementById("custom-cursor")
+      const cursorImg = cursor?.querySelector("img")
+      if (cursorImg) {
+        cursorImg.src = "/mouse.png"
+        cursorImg.alt = "Blue arrow cursor"
+      }
+    }
+
+    // Add event listeners to all interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"]')
+    interactiveElements.forEach((element) => {
+      element.addEventListener("mouseenter", handleMouseEnter)
+      element.addEventListener("mouseleave", handleMouseLeave)
+    })
+
     document.addEventListener("mousemove", handleMouseMove)
 
     return () => {
       document.removeEventListener("mousemove", handleMouseMove)
+      interactiveElements.forEach((element) => {
+        element.removeEventListener("mouseenter", handleMouseEnter)
+        element.removeEventListener("mouseleave", handleMouseLeave)
+      })
     }
   }, [])
 
